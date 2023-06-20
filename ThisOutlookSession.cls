@@ -11,24 +11,24 @@ Private WithEvents sentItems As Outlook.items
 Attribute sentItems.VB_VarHelpID = -1
         
 '##############################################################################################################################################################
-'######## TODO E-MAIL QUE CHEGAR NESSE ENDEREÇO NO ENDEREÇO primaryAccountEmail ###############################################################################
-'######## SERÁ MOVIMENTADO PARA A PASTA QUE SE ENCONTRA NA RAIZ, NOMEADA COMO namePrimaryFolderMove ###########################################################
-'######## SERÁ RESPONDIDO COM A MENSAGEM AUTOMÁTICA automaticMessage1 and automaticMessage2 ###################################################################
+'######## TODO E-MAIL QUE CHEGAR NESSE ENDEREÃ‡O NO ENDEREÃ‡O primaryAccountEmail ###############################################################################
+'######## SERÃ MOVIMENTADO PARA A PASTA QUE SE ENCONTRA NA RAIZ, NOMEADA COMO namePrimaryFolderMove ###########################################################
+'######## SERÃ RESPONDIDO COM A MENSAGEM AUTOMÃTICA automaticMessage1 and automaticMessage2 ###################################################################
 '##############################################################################################################################################################
-'######## CASO O REMETENTE SEJA O primaryAccountEmail O EMAIL SERÁ MOVIMENTADO PARA A PASTA QUE SE ENCONTRA NA RAIZ, NOMEADA COMO nameArchiveFolderMove #######
+'######## CASO O REMETENTE SEJA O primaryAccountEmail O EMAIL SERÃ MOVIMENTADO PARA A PASTA QUE SE ENCONTRA NA RAIZ, NOMEADA COMO nameArchiveFolderMove #######
 '##############################################################################################################################################################
 
 Const primaryAccountEmail As String = "SUBSTITUA-AQUI@outlook.com.br"
 Const namePrimaryFolderMove As String = "SUBSTITUA-AQUI-COM-O-NOME-DA-PASTA"
 Const nameArchiveFolderMove As String = "SUBSTITUA-AQUI-COM-O-NOME-DA-PASTA"
-Const automaticMessage1 As String = "Obrigado por entrar em contato conosco. Este é um e-mail automático para confirmar que recebemos sua mensagem. Iremos responder assim que possível."
+Const automaticMessage1 As String = "Obrigado por entrar em contato conosco. Este Ã© um e-mail automÃ¡tico para confirmar que recebemos sua mensagem. Iremos responder assim que possÃ­vel."
 Const automaticMessage2 As String = "Atenciosamente, SUBSTITUA-AQUI-NOME-DA-EMPRESA."
 
 '#########################################################################################################
-'######## ESSA FUNÇÃO É COMUM PARA UTILIZAÇÃO EM GRUPOS QUE DIRECIONAM UM E-MAIL PARA O PRINCIPAL ########
+'######## ESSA FUNÃ‡ÃƒO Ã‰ COMUM PARA UTILIZAÃ‡ÃƒO EM GRUPOS QUE DIRECIONAM UM E-MAIL PARA O PRINCIPAL ########
 '#########################################################################################################
-'######## TODO E-MAIL QUE CHEGAR NESSE ENDEREÇO NO ENDEREÇO secondAccountEmail ###########################
-'######## SERÁ MOVIMENTADO PARA A PASTA QUE SE ENCONTRA NA RAIZ, NOMEADA COMO nameSecondFolderMove #######
+'######## TODO E-MAIL QUE CHEGAR NESSE ENDEREÃ‡O NO ENDEREÃ‡O secondAccountEmail ###########################
+'######## SERÃ MOVIMENTADO PARA A PASTA QUE SE ENCONTRA NA RAIZ, NOMEADA COMO nameSecondFolderMove #######
 '######## PARA DESABILITAR, DEFINA functionMoveSecond COMO false #########################################
 '#########################################################################################################
 
@@ -71,7 +71,7 @@ Private Sub sentItems_ItemAdd(ByVal Item As Object)
         Dim objMail As Outlook.MailItem
         Set objMail = Item
 
-        If Left(objMail.body, Len(automaticMessage1)) = searchText Then
+        If Left(objMail.body, Len(automaticMessage1)) = automaticMessage1 Then
         
             Dim objFolder As Outlook.Folder
             Dim objNamespace As Outlook.NameSpace
@@ -108,15 +108,15 @@ Private Sub Application_NewMailEx(ByVal EntryIDCollection As String)
     For Each EntryID In Split(EntryIDCollection, ",")
     
         
-        '####### SETANDO O E-MAIL QUE SERÁ TRABALHADO ########
+        '####### SETANDO O E-MAIL QUE SERÃ TRABALHADO ########
         Set objMail = Application.Session.GetItemFromID(EntryID)
         
         '############################################################
-        '######## DEFININDO QUAL ENDEREÇO QUE GEROU A MACRO #########
+        '######## DEFININDO QUAL ENDEREÃ‡O QUE GEROU A MACRO #########
         '############################################################
         
-        Debug.Print "----------- SESSÃO A ----------------"
-        Debug.Print "DEFINIDO ENDEREÇO QUE DISPAROU MACRO"
+        Debug.Print "----------- SESSÃƒO A ----------------"
+        Debug.Print "DEFINIDO ENDEREÃ‡O QUE DISPAROU MACRO"
         Debug.Print "#####################################"
         
         Dim emailAdressApplication As String
@@ -137,17 +137,17 @@ Private Sub Application_NewMailEx(ByVal EntryIDCollection As String)
         
         Next
         
-        Debug.Print "ENDEREÇO:" & emailAdressApplication
+        Debug.Print "ENDEREÃ‡O:" & emailAdressApplication
         Debug.Print "-------------------------------------"
             
-        '####### CASO O ENDEREÇO QUE GEROU A MACRO SEJA O ENDEREÇO DEFINIDO COMO PRIMARIO #######
+        '####### CASO O ENDEREÃ‡O QUE GEROU A MACRO SEJA O ENDEREÃ‡O DEFINIDO COMO PRIMARIO #######
         If InStr(1, emailAdressApplication, primaryAccountEmail, vbTextCompare) > 0 Then
                          
             '###########################################################
-            '####### DEFININDO OS ENDEREÇOS DOS EMAILS COPIADOS ########
+            '####### DEFININDO OS ENDEREÃ‡OS DOS EMAILS COPIADOS ########
             '###########################################################
             
-            Debug.Print "----------- SESSÃO B ----------------"
+            Debug.Print "----------- SESSÃƒO B ----------------"
             Debug.Print "DEFINIDO LISTA DE 'PARA' E EM 'COPIA'"
             Debug.Print "#####################################"
             
@@ -191,7 +191,7 @@ Private Sub Application_NewMailEx(ByVal EntryIDCollection As String)
             '############## DEFININDO O EMITENTE #################
             '#####################################################
             
-            Debug.Print "--------- SESSÃO C ---------"
+            Debug.Print "--------- SESSÃƒO C ---------"
             Debug.Print "DEFINIDO QUEM ENVIOU O EMAIL"
             Debug.Print "############################"
             
@@ -208,7 +208,7 @@ Private Sub Application_NewMailEx(ByVal EntryIDCollection As String)
             '################# MOVENDO O EMAIL ###################
             '#####################################################
             
-            Debug.Print "----------- SESSÃO D ----------------"
+            Debug.Print "----------- SESSÃƒO D ----------------"
             Debug.Print "RETIRANDO EMAIL DA CAIXA DE ENTRADA"
             Debug.Print "#####################################"
             
@@ -220,11 +220,11 @@ Private Sub Application_NewMailEx(ByVal EntryIDCollection As String)
                     
             ElseIf InStr(1, toList & ccList, primaryAccountEmail, vbTextCompare) > 0 Then
                 
-                '####### CASO O EMAIL RECEBIDO NÃO TENHA UM NÚMERO DE TICKET AINDA, GERA UM NOVO E MOVIMENTA#######
+                '####### CASO O EMAIL RECEBIDO NÃƒO TENHA UM NÃšMERO DE TICKET AINDA, GERA UM NOVO E MOVIMENTA#######
                 If InStr(1, objMail.Subject, "[TICKET #", vbTextCompare) = 0 Then
                 
                     Call Z.MoveToFolder(objMail, namePrimaryFolderMove, primaryAccountEmail)
-                    Debug.Print "MOVIMENTANDO PARA HISTÓRICO"
+                    Debug.Print "MOVIMENTANDO PARA HISTÃ“RICO"
                     Debug.Print "-------------------------------------"
                     
                     Call generateTicket(objMail, toList, ccList)
