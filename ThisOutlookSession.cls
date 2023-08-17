@@ -110,7 +110,17 @@ Private Sub Application_NewMailEx(ByVal EntryIDCollection As String)
         
         '####### SETANDO O E-MAIL QUE SERÁ TRABALHADO ########
         Set objMail = Application.Session.GetItemFromID(EntryID)
-        
+
+        '#####################################################################
+        '######## RETIRANDO A REALIZAÇÃO DA MACRO DO LIXO ELETRÔNICO #########
+        '#####################################################################
+
+        Debug.Prin "ESSE ITEM ESTÁ PRESENTE EM:" & objMail.Parent.Name
+        If Not Application.ActiveInspector.CurrentItem.RetentionExpirationDate < (Now() + 1000) Then
+              Debug.Print "ESSE ITEM NÃO PODE SER RESPONDIDO, ENCERRANDO MACRO"
+              Exit Sub
+        End If
+
         '############################################################
         '######## DEFININDO QUAL ENDEREÇO QUE GEROU A MACRO #########
         '############################################################
